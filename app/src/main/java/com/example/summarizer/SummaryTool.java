@@ -1,4 +1,7 @@
 package com.example.summarizer;
+import android.util.Log;
+import android.widget.Toast;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -8,12 +11,13 @@ import java.util.Iterator;
 import java.util.Collections;
 
 public class SummaryTool {
-    FileInputStream in;
-    FileOutputStream out;
+    //File file=new File(link);
+    BufferedReader in;
     ArrayList<Sentence> sentences, contentSummary;
     ArrayList<Paragraph> paragraphs;
     int noOfSentences, noOfParagraphs;
     String link;
+    //File file=new File(link);
 
     String a="";
 
@@ -22,16 +26,19 @@ public class SummaryTool {
 
 
     SummaryTool(){
-        in = null;
-        out = null;
+        //in = null;
+        //out = null;
         noOfSentences = 0;
         noOfParagraphs = 0;
     }
     void inputlink(String x){
         this.link=x;
+
     }
+    File file=new File(link);
 
     void init(){
+        Log.d("3","File link: "+link);
         sentences = new ArrayList<Sentence>();
         paragraphs = new ArrayList<Paragraph>();
         contentSummary = new ArrayList<Sentence>();
@@ -39,12 +46,15 @@ public class SummaryTool {
         noOfSentences = 0;
         noOfParagraphs = 0;
         try {
-            in = new FileInputStream(link);
+            in = new BufferedReader(new FileReader(file));
+            Log.d("1","File output: "+in);
             //out = new FileOutputStream("output.txt");
-        }catch(FileNotFoundException e){
-            e.printStackTrace();
+        }catch (NullPointerException e){
+        }
+        catch(FileNotFoundException e){
+            Log.d("1","File not found: "+e);
         }catch(Exception e){
-            e.printStackTrace();
+            Log.d("1","File exception: "+e);
         }
     }
 
